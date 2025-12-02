@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Tools Helper — Curated Resources</title>
+        <meta name="description"
+            content="A curated collection of developer and design tools.">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet">
+
+        <style>
+    :root {
+      /* Modern Deep Space Palette */
+      --bg: #030712;
+      --card-bg: rgba(31, 41, 55, 0.4);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --accent: #8b5cf6; /* Violet */
+      --accent-glow: rgba(139, 92, 246, 0.3);
+      --glass: blur(12px);
+      --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      margin: 0;
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- Navigation --- */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: rgba(3, 7, 18, 0.8);
+      backdrop-filter: var(--glass);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), #4c1d95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .brand-text h1 { margin: 0; font-size: 16px; font-weight: 600; }
+    .brand-text p { margin: 0; font-size: 12px; color: var(--text-muted); }
+
+    /* --- Controls Section (Search & Filter) --- */
+    .controls {
+      max-width: 1200px;
+      margin: 32px auto 24px;
+      padding: 0 24px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 20px;
+      padding-left: 48px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.03);
+      color: white;
+      font-size: 16px;
+      font-family: inherit;
+      transition: all 0.2s var(--ease);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+
+    .filter-btn:hover { background: rgba(255, 255, 255, 0.08); color: white; }
+    
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    /* --- Grid --- */
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      width: 100%;
+      flex: 1;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s;
+      position: relative;
+      height: 100%;
+      backdrop-filter: blur(4px);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px -5px rgba(0,0,0,0.4);
+      border-color: rgba(139, 92, 246, 0.3);
+    }
+
+    .card-media {
+      aspect-ratio: 16/9;
+      background: #111827;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease);
+    }
+
+    .card:hover .card-media img {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 12px;
+    }
+
+    .card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 18px;
+      margin: 0;
+      color: #fff;
+    }
+
+    .badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .card-badge {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+      font-weight: 600;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      flex: 1; /* Pushes button to bottom */
+    }
+
+    .card-footer {
+      margin-top: 8px;
+      padding-top: 16px;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn-visit {
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+      background: white;
+      color: black;
+      transition: transform 0.1s;
+    }
+    
+    .btn-visit:hover { transform: scale(1.03); background: #f0f0f0; }
+    .btn-visit:active { transform: scale(0.97); }
+
+    .domain {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px;
+      color: var(--text-muted);
+    }
+    
+    .loading-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px;
+      color: var(--text-muted);
+      font-weight: 500;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 32px 24px;
+      margin-top: auto;
+      background: rgba(0,0,0,0.2);
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      .controls {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .search-wrapper { margin-bottom: 0; min-width: 300px; }
+      .card-header { flex-direction: row; justify-content: space-between; align-items: flex-start; }
+      .badges { justify-content: flex-end; }
+    }
+    @media (max-width: 600px) {
+      .nav { padding: 12px 16px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+    </head>
+    <body>
+
+        <nav class="nav">
+            <a href="#" class="brand">
+                <div class="logo">TH</div>
+                <div class="brand-text">
+                    <h1>Tools Helper</h1>
+                    <p>Resource Directory</p>
+                </div>
+            </a>
+        </nav>
+
+        <section class="controls">
+            <div class="search-wrapper">
+                <svg class="search-icon" width="20" height="20" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="text" id="searchInput" class="search-input"
+                    placeholder="Search tools, libraries..."
+                    aria-label="Search tools">
+            </div>
+
+            <div class="filters" id="filterContainer">
+                <button class="filter-btn active"
+                    data-category="all">All</button>
+                <button class="filter-btn" data-category="Dev">Dev</button>
+                <button class="filter-btn"
+                    data-category="Design">Design</button>
+                <button class="filter-btn"
+                    data-category="Utility">Utility</button>
+            </div>
+        </section>
+
+        <main class="wrap">
+            <section class="grid" id="grid" aria-live="polite">
+                <div class="loading-state">Loading tools data...</div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <span>© 2025 Tools Helper</span>
+                <span>Loaded from <code>data.js</code></span>
+            </div>
+        </footer>
+
+        <!-- Load data first -->
+        <script src="data.js"></script>
+
+        <!-- Main Application Logic -->
+        <script>
+    const grid = document.getElementById('grid');
+    const searchInput = document.getElementById('searchInput');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    // State
+    let currentCategory = 'all';
+    let searchTerm = '';
+
+    // Initialize
+    function init() {
+      // Check if data.js loaded successfully
+      if (typeof toolsData === 'undefined') {
+        grid.innerHTML = `
+          <div class="empty-state" style="color:#ef4444">
+            <h3>Error loading data</h3>
+            <p>Could not find <code>toolsData</code>. Please ensure <code>data.js</code> is in the same folder.</p>
+          </div>
+        `;
+        return;
+      }
+      render();
+    }
+
+    // Extract Domain Helper
+    function getDomain(url) {
+      try {
+        return new URL(url).hostname.replace('www.', '');
+      } catch (e) {
+        return 'link';
+      }
+    }
+
+    // Render Function
+    function render() {
+      grid.innerHTML = '';
+      
+      const filtered = toolsData.filter(item => {
+        const matchesSearch = item.title.toLowerCase().includes(searchTerm) || 
+                              item.desc.toLowerCase().includes(searchTerm);
+                              
+        // CATEGORY LOGIC: Checks if the array includes the selected category
+        const matchesCategory = currentCategory === 'all' || 
+                                (Array.isArray(item.category) 
+                                  ? item.category.includes(currentCategory) 
+                                  : item.category === currentCategory); 
+                                  
+        return matchesSearch && matchesCategory;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <h3>No tools found</h3>
+            <p>Try adjusting your search or filter criteria.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(t => {
+        const article = document.createElement('article');
+        article.className = 'card';
+        
+        // Generate list of badges
+        let badgesHtml = '';
+        if (Array.isArray(t.category)) {
+          badgesHtml = t.category.map(c => `<span class="card-badge">${c}</span>`).join('');
+        } else {
+          badgesHtml = `<span class="card-badge">${t.category}</span>`;
+        }
+
+        article.innerHTML = `
+          <div class="card-media">
+            <img src="${t.img}" alt="${t.title}" loading="lazy" onerror="this.src='https://placehold.co/600x400/1f2937/fff?text=${t.title}'">
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h2 class="card-title">${t.title}</h2>
+              <div class="badges">${badgesHtml}</div>
+            </div>
+            <p class="card-desc">${t.desc}</p>
+            <div class="card-footer">
+              <span class="domain">${getDomain(t.url)}</span>
+              <a href="${t.url}" target="_blank" rel="noopener noreferrer" class="btn-visit">
+                Visit
+              </a>
+            </div>
+          </div>
+        `;
+        grid.appendChild(article);
+      });
+    }
+
+    // Event Listeners for Search
+    searchInput.addEventListener('input', (e) => {
+      searchTerm = e.target.value.toLowerCase();
+      render();
+    });
+
+    // Event Listeners for Filters
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class from all
+        filterBtns.forEach(b => b.classList.remove('active'));
+        // Add to clicked
+        btn.classList.add('active');
+        // Update state
+        currentCategory = btn.dataset.category;
+        render();
+      });
+    });
+
+    // Start
+    init();
+
+  </script>
+    </body>
+</html>
