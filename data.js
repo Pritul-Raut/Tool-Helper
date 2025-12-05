@@ -14,7 +14,7 @@ const toolsData = [
         ],
         "desc": "info and questions about tag test which is after tcs codevita ",
         "img": "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&w=800&q=80",
-        "url": "/Tool-Helper/tagtest.html"
+        "url": "./tagtest.html"
     },
   {
     "title": "Squoosh",
